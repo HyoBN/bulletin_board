@@ -12,4 +12,13 @@ public class hbController {
         return "home";
     }
     
+    @GetMapping("members/sign_in")
+    public String sign_in(){
+        return "members/sign_in";
+    }
+    
+    @GetMapping("members/sign_up")
+    public String sign_up(){
+        return "members/sign_up";
+    }
 }
