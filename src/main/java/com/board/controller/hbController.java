@@ -1,5 +1,25 @@
 package com.board.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class hbController{
+    @GetMapping("/")
+    public String list(){
+        return "board/list";
+    }
+    
+    @GetMapping("/post")
+    public String write(){
+        return "board/write";
+    }
+}
+
+/*
+hbcontroller
+package com.board.controller;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,4 +41,4 @@ public class hbController {
     public String sign_up(){
         return "members/sign_up";
     }
-}
+}*/
