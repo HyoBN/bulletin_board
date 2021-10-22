@@ -1,10 +1,21 @@
 package com.board.controller;
 
+import com.board.dto.BoardDto;
+import com.board.service.BoardService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class hbController{
+    
+    private BoardService boardService;
+    
+    public hbController(BoardService boardService) {
+        this.boardService=boardService;
+    }
+    
     @GetMapping("/")
     public String list(){
         return "board/list";
@@ -13,6 +24,12 @@ public class hbController{
     @GetMapping("/post")
     public String write(){
         return "board/write";
+    }
+    
+    @PostMapping("/post")
+    public String writee(BoardDto boardDto){
+        boardService.savePost(boardDto);
+        return "redirect:/";
     }
 }
 
