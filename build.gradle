@@ -35,11 +35,13 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     
     compile('org.projectlombok:lombok:1.16.18')
-    
+    //compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile group: 'org.hibernate', name:'hibernate-entitymanager',
         version:'5.2.2.Final'
+    compile group: 'org.hibernate', name:'hibernate-core',
+        version:'5.2.2.Final'
     compile("mysql:mysql-connector-java")
-    
+        
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
     
