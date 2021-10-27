@@ -31,18 +31,7 @@ test{
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.projectlombok:lombok'
-    
-    compile('org.projectlombok:lombok:1.16.18')
-    //compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile group: 'org.hibernate', name:'hibernate-entitymanager',
-        version:'5.2.2.Final'
-    compile group: 'org.hibernate', name:'hibernate-core',
-        version:'5.2.2.Final'
-    compile("mysql:mysql-connector-java")
-        
-    compile("org.springframework.boot:spring-boot-starter-web")
+
     testCompile("junit:junit")
     
     testImplementation('org.springframework.boot:spring-boot-starter-test') 
@@ -50,6 +39,11 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     
+    //Mysql
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'mysql:mysql-connector-java'
+    
+    //test
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
     testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
