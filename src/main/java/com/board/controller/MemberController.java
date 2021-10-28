@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.ui.Model;
+
 import java.util.List;
+import java.util.Optional;
 
 import com.board.entity.Member;
-
+import com.board.repository.MemberRepository;
 import com.board.service.MemberService;
 
 
@@ -29,19 +31,30 @@ public class MemberController {
     }
     
     @PostMapping("/members/new")
-    public String create(MemberForm form){
+    public String create(MemberForm form, Model msg){
         Member member = new Member();
         member.setName(form.getName());
         
-        memberService.join(member);
-        
-        return "redirect:/";
+        if(Optional.ofNullable(member.getName()).isPresent()){
+            msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
+            return "redirect:/members/new";
+        }
+        /*if(memberRepository.findByName(member.getName())
+           .ifPresent){
+            msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
+            return "redirect:/members/new";
+        }*/
+            
+        else{
+            memberService.join(member);
+            return "redirect:/";
+        }
     }
     
     @GetMapping("/members")
     public String list(Model model){
         List<Member> members=memberService.findMembers();
-        model.addAttribute("members",members);
+        model.addAttribute("members",members);            
         return "members/memberList";
     }
 }
