@@ -18,15 +18,15 @@ public class MemberService{
     }
     
     public Long join(Member member){
+            try{
+            memberRepository.findByName(member.getName())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+            } catch (Exception IllegalStateException){
+                return 0L; 
+            }
 
-        // .ifPresent : null 체크
-        // m 을 member로 바꾸기?
-        
-        /*memberRepository.findByName(member.getName())
-            .ifPresent(m -> {
-                throw new IllegalStateException("이미 존재하는 회원입니다.");
-            });*/
-        
         memberRepository.save(member);
         return member.getId();
     }

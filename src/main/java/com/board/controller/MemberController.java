@@ -34,21 +34,14 @@ public class MemberController {
     public String create(MemberForm form, Model msg){
         Member member = new Member();
         member.setName(form.getName());
-        
-        if(Optional.ofNullable(member.getName()).isPresent()){
+
+        if(memberService.join(member)==0L){
             msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
-            return "redirect:/members/new";
+            return "members/createMemberForm";
         }
-        /*if(memberRepository.findByName(member.getName())
-           .ifPresent){
-            msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
-            return "redirect:/members/new";
-        }*/
             
-        else{
-            memberService.join(member);
-            return "redirect:/";
-        }
+
+        return "redirect:/";
     }
     
     @GetMapping("/members")
