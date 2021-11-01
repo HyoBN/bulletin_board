@@ -19,10 +19,14 @@ import com.board.service.MemberService;
 public class MemberController {
     
     private final MemberService memberService;
-    
+    private final MemberRepository member;
     @Autowired
     public MemberController(MemberService memberService){
         this.memberService = memberService;
+    }
+    
+    public MemberController(MemberRepository member){
+        this.member = member;
     }
     
     @GetMapping("/members/new")
@@ -39,9 +43,17 @@ public class MemberController {
             msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
             return "members/createMemberForm";
         }
-            
-
         return "redirect:/";
+    }
+    
+    @PostMapping("/signIn")
+    public String signIn(String inputName, String inputPassword){
+        //log.info("id : {}, pw : {}", inputName, inputPassword);
+        Optional<Member> member = this.member.findByNameAndPassword(inputName, inputPassword);
+        if(member != null){
+            return "loginOK";
+        }
+        return "loginFail";
     }
     
     @GetMapping("/members")

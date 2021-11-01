@@ -9,14 +9,14 @@ import javax.persistence.*;
 
 @Entity
 public class Member {
- 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    //@Column(name="username")
     private String name;
+    private String password;
+    
     
     public Long getId() {
         return id;
@@ -31,4 +31,13 @@ public class Member {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getPassword(String password){
+        return password;
+    }
+    
+    public void setPassword(String password){
+        this.password=password;
+    }
+    
 }
