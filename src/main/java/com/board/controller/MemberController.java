@@ -18,13 +18,13 @@ import com.board.service.MemberService;
 @Controller
 public class MemberController {
     
-    private final MemberService memberService;
-    private final MemberRepository member;
-    @Autowired
+    private MemberService memberService;
+    private MemberRepository member;
+    
+    @Autowired/*(required = true)*/
     public MemberController(MemberService memberService){
         this.memberService = memberService;
     }
-    
     public MemberController(MemberRepository member){
         this.member = member;
     }
