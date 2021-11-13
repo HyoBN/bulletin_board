@@ -21,10 +21,12 @@ public class MemberController {
     private MemberService memberService;
     private MemberRepository member;
     
-    @Autowired/*(required = true)*/
+    /*@Autowired
     public MemberController(MemberService memberService){
         this.memberService = memberService;
-    }
+    }*/
+    
+    @Autowired
     public MemberController(MemberRepository member){
         this.member = member;
     }
@@ -48,7 +50,6 @@ public class MemberController {
     
     @PostMapping("/signIn")
     public String signIn(String inputName, String inputPassword){
-        //log.info("id : {}, pw : {}", inputName, inputPassword);
         Optional<Member> member = this.member.findByNameAndPassword(inputName, inputPassword);
         if(member != null){
             return "loginOK";

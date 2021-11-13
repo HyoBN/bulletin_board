@@ -11,7 +11,7 @@ import com.board.repository.MemberRepository;
 
 
 @Transactional
-//@Service
+@Service
 public class MemberService{
     private final MemberRepository memberRepository;
     
