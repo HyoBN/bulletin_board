@@ -21,15 +21,15 @@ public class MemberController {
     private MemberService memberService;
     private MemberRepository member;
     
-    /*@Autowired
+    @Autowired
     public MemberController(MemberService memberService){
         this.memberService = memberService;
-    }*/
+    }
     
-    @Autowired
+   /* @Autowired
     public MemberController(MemberRepository member){
         this.member = member;
-    }
+    }*/
     
     @GetMapping("/members/new")
     public String createForm() {
@@ -39,19 +39,27 @@ public class MemberController {
     @PostMapping("/members/new")
     public String create(MemberForm form, Model msg){
         Member member = new Member();
+        //Optional<String> name = Optional.ofNullable(form.getName());
         member.setName(form.getName());
-
-        if(memberService.join(member)==0L){
-            msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!");
+        member.setPassword(form.getPassword());
+            
+        System.out.println("***********************로그 출력********************");
+        System.out.println("form에 저장된 이름과 비밀번호 : "+form.getName()+form.getPassword());
+        
+        //System.out.println("member에 저장된 이름과 비밀번호 : "+member.getName()+member.getPassword());
+        
+            
+        if(memberService.join(member)==0L){ 
+            msg.addAttribute("loginMessage", "이미 존재하는 회원입니다!"); 
             return "members/createMemberForm";
         }
         return "redirect:/";
     }
-    
+     
     @PostMapping("/signIn")
     public String signIn(String inputName, String inputPassword){
-        Optional<Member> member = this.member.findByNameAndPassword(inputName, inputPassword);
-        if(member != null){
+        //Optional<Member> member = Optional.ofNullable(this.member.findByNameAndPassword(inputName, inputPassword));
+        if(memberService.isMember(inputName, inputPassword) != null){
             return "loginOK";
         }
         return "loginFail";
@@ -59,8 +67,8 @@ public class MemberController {
     
     @GetMapping("/members")
     public String list(Model model){
-        List<Member> members=memberService.findMembers();
-        model.addAttribute("members",members);            
+        //Optional<List<Member>> members=Optional.ofNullable(memberService.findMembers());
+        model.addAttribute("members",memberService.findMembers());
         return "members/memberList";
     }
 }

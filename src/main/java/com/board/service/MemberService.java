@@ -43,4 +43,11 @@ public class MemberService{
         return memberRepository.findById(memberId);
         
     }
+    
+    public Optional<Member> isMember(String inputName, String inputPassword){
+        return memberRepository.findByNameAndPassword(inputName,inputPassword);
+    }
+    
+    
+    
 }
