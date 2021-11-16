@@ -21,14 +21,14 @@ public class MemberService{
     }
     
     public Long join(Member member){
-            try{
-            memberRepository.findByName(member.getName())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
-            } catch (Exception IllegalStateException){
-                return 0L; 
-            }
+        try{
+        memberRepository.findByName(member.getName())
+            .ifPresent(m -> {
+                throw new IllegalStateException("이미 존재하는 회원입니다.");
+            });
+        } catch (Exception IllegalStateException){
+            return 0L; 
+        }
 
         memberRepository.save(member);
         return member.getId();
@@ -38,16 +38,19 @@ public class MemberService{
          return memberRepository.findAll();
     }
     
-    
     public Optional<Member> findOne(Long memberId){
         return memberRepository.findById(memberId);
-        
     }
     
-    public Optional<Member> isMember(String inputName, String inputPassword){
-        return memberRepository.findByNameAndPassword(inputName,inputPassword);
+    public Long isMember(Member member){    
+        try{
+            memberRepository.findByNameAndPassword(member.getName(), member.getPassword())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("등록된 회원이 맞습니다.");
+                });
+            } catch (Exception IllegalStateException){
+                return 0L; 
+            }        
+        return 1L;
     }
-    
-    
-    
 }

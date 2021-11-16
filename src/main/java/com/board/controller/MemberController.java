@@ -45,9 +45,15 @@ public class MemberController {
     }
      
     @PostMapping("/signIn")
-    public String signIn(String inputName, String inputPassword, Model msg){
-        if(memberService.isMember(inputName, inputPassword) != null){
-            msg.addAttribute("loginMessage", inputName+"님 환영합니다!!"); 
+    public String signIn(MemberForm form, Model msg){
+        Member member = new Member();
+        
+        member.setPassword(form.getPassword());
+        member.setName(form.getName());
+        //위 두 문장 순서만 바꾸니까 제대로 실행됨. Name을 먼저하면 form.name에는 null이 저장됨(password는 정상적으로 저장됨.)
+
+        if(memberService.isMember(member) == 0L){
+            msg.addAttribute("loginMessage", member.getName()+"님 환영합니다!!"); 
             return "loginOK";
         }
         return "loginFail";
