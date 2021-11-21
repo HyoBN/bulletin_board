@@ -69,6 +69,17 @@ public class MemberController {
         return "loginFail";
     }
     
+    @PostMapping("/logout")
+    public String Logout(HttpServletRequest request){
+        
+        HttpSession session = request.getSession(false);
+        if(session!=null){
+            session.invalidate();
+        }
+        
+        return "redirect:/";
+    }
+    
     @GetMapping("/members")
     public String list(Model model){
         model.addAttribute("members",memberService.findMembers());
