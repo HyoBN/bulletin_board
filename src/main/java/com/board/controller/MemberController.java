@@ -10,10 +10,15 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import org.springframework.validation.*;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
 import com.board.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
@@ -45,7 +50,7 @@ public class MemberController {
     }
      
     @PostMapping("/signIn")
-    public String signIn(MemberForm form, Model msg){
+    public String signIn(MemberForm form, Model msg, HttpServletRequest request){
         Member member = new Member();
         
         member.setPassword(form.getPassword());
@@ -53,9 +58,14 @@ public class MemberController {
         //위 두 문장 순서만 바꾸니까 제대로 실행됨. Name을 먼저하면 form.name에는 null이 저장됨(password는 정상적으로 저장됨.)
 
         if(memberService.isMember(member) == 0L){
+            HttpSession session = request.getSession();
+            session.setAttribute("loginMember",member);
+            
             msg.addAttribute("loginMessage", member.getName()+"님 환영합니다!!"); 
             return "loginOK";
         }
+        
+        
         return "loginFail";
     }
     
