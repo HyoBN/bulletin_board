@@ -27,9 +27,14 @@ public class PostController {
     }
     
     @PostMapping("/posts/new")
-    public String create(PostForm form, Model msg){
+    public String create(PostForm form, Model msg, HttpServletRequest request){
         
-        // 세션 만료되었을 경우(로그아웃 되었을 경우) 예외처리하기.
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+            
+            return "members/createMemberForm";
+        }
         Post post = new Post();
         post.setTitle(form.getTitle());
         post.setWriter(form.getWriter());
