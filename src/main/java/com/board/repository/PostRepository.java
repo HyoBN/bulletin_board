@@ -1,6 +1,6 @@
 package com.board.repository;
 
-import com.board.entity.Member;
+import com.board.entity.Post;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +12,7 @@ public interface MemberRepository extends JpaRepository<Post, Long> {
     Post save(Post post);
     Optional<Post> findById(Long id);
     Optional<Post> findByTitle(String title);
+    Optional<Post> findByDate(String date);
     Optional<Post> findByWriter(String writer);
     List<Post> findAll();
 
