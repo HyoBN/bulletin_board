@@ -1,13 +1,17 @@
 package com.board.controller;
 
+import javax.validation.constraints.*;
+
+import org.springframework.validation.*;
 
 public class PostForm{
     
     @NotNull
-    
     private String title;
     
     private String writer;
+    
+    private String contents;
     
     private String date;
     
@@ -23,6 +27,10 @@ public class PostForm{
         return date;
     }
     
+    public String getContents(){
+        return contents;
+    }
+    
     public void setTitle(String title){
         this.title=title;
     }
@@ -33,5 +41,9 @@ public class PostForm{
     
     public void setDate(String date){
         this.date=date;
+    }
+    
+    public void setContents(String contents){
+        this.contents=contents;
     }
 }
