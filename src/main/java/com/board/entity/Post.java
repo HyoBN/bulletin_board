@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Column;
 
 @Entity
 public class Post {
@@ -13,16 +12,12 @@ public class Post {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
     private String title;
     
-    @Column(nullable = false)
     private String writer;
     
-    @Column
     private String contents;
     
-    @Column(nullable = false)
     private String date;
     
     public Long getId(){
