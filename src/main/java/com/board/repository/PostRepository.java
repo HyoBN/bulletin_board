@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
     
 @Repository
-public interface MemberRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
     Post save(Post post);
     Optional<Post> findById(Long id);
     Optional<Post> findByTitle(String title);

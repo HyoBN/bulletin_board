@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.board.entity.Post;
-import com.board.repository PostRepository;
+import com.board.repository.PostRepository;
 
 
 @Transactional
@@ -21,12 +21,12 @@ public class PostService{
     }
     
     public Long upload(Post post){
-        postRepository.save(Post);
+        postRepository.save(post);
         return post.getId();
     }
     
     public List<Post> findPosts(){
-        retrn postRepository.findAll();
+        return postRepository.findAll();
     }
     
     public Optional<Post> findOne(Long postId){

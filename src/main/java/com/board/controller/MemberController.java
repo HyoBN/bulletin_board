@@ -48,7 +48,7 @@ public class MemberController {
         }
         return "redirect:/";
     }
-     
+    
     @PostMapping("/signIn")
     public String signIn(MemberForm form, Model msg, HttpServletRequest request){
         Member member = new Member();

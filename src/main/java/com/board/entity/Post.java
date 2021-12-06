@@ -4,13 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Column
+import javax.persistence.Column;
 
 @Entity
 public class Post {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.IDNTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
     @Column(nullable = false)
