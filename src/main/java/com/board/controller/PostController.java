@@ -12,6 +12,13 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.board.entity.Post;
+import com.board.repository.PostRepository;
+import com.board.service.PostService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class PostController {
     private PostService postservice;
@@ -38,6 +45,7 @@ public class PostController {
         Post post = new Post();
         post.setTitle(form.getTitle());
         post.setWriter(form.getWriter());
+        post.setContents(form.getContents());
         post.setDate(form.getDate());
         
         return "redirect:/";
