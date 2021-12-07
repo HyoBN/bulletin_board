@@ -48,7 +48,7 @@ public class Post {
         return contents;
     }
     
-    public void setContenst(String contents){
+    public void setContents(String contents){
         this.contents=contents;
     }
     
