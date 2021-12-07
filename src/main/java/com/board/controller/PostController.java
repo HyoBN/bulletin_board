@@ -39,19 +39,20 @@ public class PostController {
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
+             return "home";
             
-            return "members/createMemberForm";
+            //return "members/createMemberForm";
         }
         Post post = new Post();
         post.setTitle(form.getTitle());
         post.setWriter(form.getWriter());
         post.setContents(form.getContents());
         post.setDate(form.getDate());
-        
-        return "redirect:/";
+        return "posts/createPostForm";
+       
     }
     
-    @PostMapping("/logout")
+    /*@PostMapping("/logout")
     public String Logout(HttpServletRequest request){
         
         HttpSession session = request.getSession(false);
@@ -60,7 +61,7 @@ public class PostController {
         }
         
         return "redirect:/";
-    }
+    }*/
     
     @GetMapping("/posts")
     public String list(Model model){

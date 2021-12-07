@@ -62,7 +62,7 @@ public class MemberController {
             session.setAttribute("loginMember",member);
             
             msg.addAttribute("loginMessage", member.getName()+"님 환영합니다!!"); 
-            return "loginOK";
+            return "boardHome";
         }
         
         

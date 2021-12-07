@@ -31,7 +31,7 @@ public class HomeController{
         if (loginMember != null) {
                 // 세션이 유지되면 로그인 홈으로 이동
             model.addAttribute("loginMessage", loginMember.getName()+"님 로그인 상태입니다."); 
-            return "loginHome";
+            return "boardHome";
 
         }
         return "home";
