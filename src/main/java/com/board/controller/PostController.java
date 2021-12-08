@@ -48,6 +48,7 @@ public class PostController {
         post.setWriter(form.getWriter());
         post.setContents(form.getContents());
         post.setDate(form.getDate());
+        postservice.upload(post);
         return "posts/createPostForm";
        
     }
