@@ -28,7 +28,13 @@ public class PostController {
     }
     
     @GetMapping("/posts/new")
-    public String createForm() {
+    public String createForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            return "sessionFail";
+        }
         return "posts/createPostForm";
     }
     
@@ -36,28 +42,21 @@ public class PostController {
         public String create(PostForm form, Model model, HttpServletRequest request){
         
         HttpSession session = request.getSession(false);
-        /*if(session==null){
+        if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
-             return "home";
+             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+        }
             
-            return "members/createMemberForm";
-        }*/
-        if(session!=null){
+        else if(session!=null){
             Post post = new Post();
             post.setTitle(form.getTitle());
             post.setWriter(form.getWriter());
             post.setContents(form.getContents());
             post.setDate(form.getDate());
             postservice.upload(post);
-            model.addAttribute("posts",postservice.findPosts());
+            
         }
         return "redirect:/";
        
-    }
-    
-    @GetMapping("/posts")
-    public String list(Model model){
-        model.addAttribute("posts",postservice.findPosts());
-        return "boardHome";
     }
 }
