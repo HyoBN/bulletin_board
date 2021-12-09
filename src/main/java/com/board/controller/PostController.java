@@ -13,7 +13,6 @@ import java.util.Optional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.board.entity.Post;
-import com.board.repository.PostRepository;
 import com.board.service.PostService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class PostController {
     }
     
     @PostMapping("/posts/new")
-    public String create(PostForm form, Model msg, HttpServletRequest request){
+        public String create(PostForm form, Model model, HttpServletRequest request){
         
         HttpSession session = request.getSession(false);
         if(session==null){
@@ -49,6 +48,7 @@ public class PostController {
         post.setContents(form.getContents());
         post.setDate(form.getDate());
         postservice.upload(post);
+        model.addAttribute("posts",postservice.findPosts());
         return "boardHome";
        
     }
@@ -67,6 +67,6 @@ public class PostController {
     @GetMapping("/posts")
     public String list(Model model){
         model.addAttribute("posts",postservice.findPosts());
-        return "posts/postList";
+        return "boardHome";
     }
 }

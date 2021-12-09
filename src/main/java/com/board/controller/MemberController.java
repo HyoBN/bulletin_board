@@ -61,11 +61,12 @@ public class MemberController {
             HttpSession session = request.getSession();
             session.setAttribute("loginMember",member);
             
+            //여기에 post를 속성으로 주던가 해야하는데 그러면 member,post controller 혼용하는 꼴..
             msg.addAttribute("loginMessage", member.getName()+"님 환영합니다!!"); 
-            return "boardHome";
+            return "redirect:/";
         }
         
-        
+        //loginFail 페이지가 아닌 팝업창, 메시지 띄우는 것으로 바꾸기.
         return "loginFail";
     }
     
