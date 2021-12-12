@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.ui.Model;
 
@@ -39,8 +40,7 @@ public class PostController {
     }
     
     @PostMapping("/posts/new")
-        public String create(PostForm form, Model model, HttpServletRequest request){
-        
+        public String create(PostForm form, Model model, HttpServletRequest request){        
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
@@ -57,6 +57,18 @@ public class PostController {
             
         }
         return "redirect:/";
-       
+    }
+    
+    @GetMapping("/posts/detail/{id}")
+    public String detail(@RequestParam("id") Long id, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+        }
+        Optional<Post> post = postservice.findOne(id);
+        model.addAttribute("post",post);
+        
+        return "posts/postDetail";
     }
 }
