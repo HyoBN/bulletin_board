@@ -62,8 +62,6 @@ public class PostController {
     
     @GetMapping("/posts/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request){
-        System.out.println("아이디 출력!!!!!!!");
-        System.out.println(id);
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
@@ -71,10 +69,6 @@ public class PostController {
         }
         Post post = postservice.findOne(id);
         model.addAttribute("post",post);
-        System.out.println("아이디 출력!!!!!!!");
-        //System.out.println(post.id);
-        //이게 되면 , post.title, contents 등 다 출력 해보기.
-        
         return "posts/postDetail";
     }
 }

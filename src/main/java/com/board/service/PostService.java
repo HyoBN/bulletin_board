@@ -31,8 +31,6 @@ public class PostService{
     public Post findOne(Long postId){
         Post post = new Post();
         post=postRepository.findById(postId);
-        System.out.println("ㄹㅇ 포스트 : ");
-        System.out.println(post.getTitle());
         return postRepository.findById(postId);
     }
     
