@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.ui.Model;
 
@@ -60,14 +61,19 @@ public class PostController {
     }
     
     @GetMapping("/posts/detail/{id}")
-    public String detail(@RequestParam("id") Long id, Model model, HttpServletRequest request){
+    public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request){
+        System.out.println("아이디 출력!!!!!!!");
+        System.out.println(id);
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
              model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
         }
-        Optional<Post> post = postservice.findOne(id);
+        Post post = postservice.findOne(id);
         model.addAttribute("post",post);
+        System.out.println("아이디 출력!!!!!!!");
+        //System.out.println(post.id);
+        //이게 되면 , post.title, contents 등 다 출력 해보기.
         
         return "posts/postDetail";
     }

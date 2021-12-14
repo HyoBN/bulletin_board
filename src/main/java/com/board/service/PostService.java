@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.board.entity.Post;
 import com.board.repository.PostRepository;
 
-
 @Transactional
 @Service
 public class PostService{
@@ -29,7 +28,11 @@ public class PostService{
         return postRepository.findAll();
     }
     
-    public Optional<Post> findOne(Long postId){
+    public Post findOne(Long postId){
+        Post post = new Post();
+        post=postRepository.findById(postId);
+        System.out.println("ㄹㅇ 포스트 : ");
+        System.out.println(post.getTitle());
         return postRepository.findById(postId);
     }
     

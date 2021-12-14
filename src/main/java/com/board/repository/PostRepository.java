@@ -10,7 +10,8 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post save(Post post);
-    Optional<Post> findById(Long id);
+    Post findById(Long id);
+    //Optional<Post> findById(Long id);
     Optional<Post> findByTitle(String title);
     Optional<Post> findByDate(String date);
     Optional<Post> findByWriter(String writer);

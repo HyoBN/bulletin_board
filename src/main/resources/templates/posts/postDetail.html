@@ -5,6 +5,9 @@
 <body>
 <div class="container">
     <p th:text="${sessionMessage}"></p>
+    <p>
+        반갑습니다....
+    </p>
     <thead>
     <tr>
         <th>번호</th>
@@ -13,11 +16,12 @@
         <th>날짜</th>
     </tr>
     </thead>
+    <hr/>
     <tbody>
     <tr>
         <td th:text="${post.id}"></td>
         <td th:text="${post.title}"></td>
-        <td th:text="${post.contents}"</td>
+        <td th:text="${post.contents}"></td>
         <td th:text="${post.writer}"></td>
         <td th:text="${post.date}"></td>
     </tr>
