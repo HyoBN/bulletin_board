@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post save(Post post);
     Post findById(Long id);
+    void deleteById(Long id);
     Optional<Post> findByTitle(String title);
     Optional<Post> findByDate(String date);
     Optional<Post> findByWriter(String writer);

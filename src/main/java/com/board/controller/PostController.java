@@ -65,7 +65,8 @@ public class PostController {
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
-             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            return "sessionFail";
         }
         Post post = postservice.findOne(id);
         model.addAttribute("post",post);
@@ -85,11 +86,10 @@ public class PostController {
     }
     
     @PostMapping("/posts/modify/{id}")
-    public String updatePost(@PathVariable("id") Long id,Model model, PostForm form, HttpServletRequest request){
+    public String updatePost(@PathVariable("id") Long id, PostForm form, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
-            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
             return "sessionFail";
         }
         else if(session!=null){
@@ -101,6 +101,17 @@ public class PostController {
             postservice.upload(post);
             
         }
+        return "redirect:/";
+    }
+    
+    @PostMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable("id") Long id,HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+            return "sessionFail";
+        }
+        postservice.delete(id);
         return "redirect:/";
     }
 }

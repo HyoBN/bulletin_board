@@ -24,6 +24,10 @@ public class PostService{
         return post.getId();
     }
     
+    public void delete(Long id){
+        postRepository.deleteById(id);
+    }
+    
     public List<Post> findPosts(){
         return postRepository.findAll();
     }
@@ -33,5 +37,6 @@ public class PostService{
         post=postRepository.findById(postId);
         return postRepository.findById(postId);
     }
+    
     
 }

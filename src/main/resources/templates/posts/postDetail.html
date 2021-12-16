@@ -30,6 +30,8 @@
     <form th:action="${'/posts/modify/'+post.id}" method="get">
         <button type="submit">수정</button> 
     </form>
-    
+    <form th:action="${'/posts/delete/'+post.id}" method="post">
+        <button type="submit">삭제</button> 
+    </form>
 </body>
 </html>
