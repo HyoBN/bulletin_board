@@ -16,7 +16,7 @@
         <label for="name">날짜</label>
         <input type="text" id="date" name="date" th:value="${post.date}"></input>
         <label for="">내용</label>
-        <input type="text" id="contents" name="contents" th:value="${post.contents}"></input>    
+        <textarea id="contents" name="contents" th:text="${post.contents}"></textarea>  
     
         <div class="form-group">
             <button type="submit">완료</button>   
