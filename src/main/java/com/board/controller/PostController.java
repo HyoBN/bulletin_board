@@ -71,4 +71,36 @@ public class PostController {
         model.addAttribute("post",post);
         return "posts/postDetail";
     }
+    
+    @GetMapping("/posts/modify/{id}")
+    public String toModifyPage(@PathVariable("id") Long id,Model model, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            return "sessionFail";
+        }
+        model.addAttribute("post",postservice.findOne(id));
+        return "posts/postModify";
+    }
+    
+    @PostMapping("/posts/modify/{id}")
+    public String updatePost(@PathVariable("id") Long id,Model model, PostForm form, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session==null){
+            // 세션 만료되었다는 팝업 띄우기.
+            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            return "sessionFail";
+        }
+        else if(session!=null){
+            Post post = postservice.findOne(id);
+            post.setTitle(form.getTitle());
+            post.setWriter(form.getWriter());
+            post.setContents(form.getContents());
+            post.setDate(form.getDate());
+            postservice.upload(post);
+            
+        }
+        return "redirect:/";
+    }
 }
