@@ -54,7 +54,6 @@ public class PostController {
             post.setTitle(form.getTitle());
             post.setWriter(form.getWriter());
             post.setContents(form.getContents());
-            post.setDate(form.getDate());
             postservice.upload(post);
             
         }
@@ -98,7 +97,6 @@ public class PostController {
             post.setTitle(form.getTitle());
             post.setWriter(form.getWriter());
             post.setContents(form.getContents());
-            post.setDate(form.getDate());
             postservice.upload(post);
             
         }

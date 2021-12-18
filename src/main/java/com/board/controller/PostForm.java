@@ -39,11 +39,7 @@ public class PostForm{
     public void setWriter(String writer){
         this.writer=writer;
     }
-    
-    public void setDate(String date){
-        this.date=date;
-    }
-    
+        
     public void setContents(String contents){
         this.contents=contents;
     }
