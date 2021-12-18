@@ -12,9 +12,9 @@
         <label for="name">제목</label>
         <input type="text" id="title" name="title" th:value="${post.title}"></input>
         <label for="name">작성자</label>
-        <input type="text" id="writer" name="writer" th:value="${post.writer}"></input>
+        <input type="text" id="writer" name="writer" th:value="${post.writer}" readonly="readonly"></input>
         <label for="name">날짜</label>
-        <input type="text" id="date" name="date" th:value="${post.date}"></input>
+        <input type="text" id="date" name="date" th:value="${post.date}" readonly="readonly"></input>
         <label for="">내용</label>
         <textarea id="contents" name="contents" th:text="${post.contents}"></textarea>  
     
