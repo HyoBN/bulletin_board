@@ -36,6 +36,9 @@ public class HomeController{
         
         // 세션이 유지되면 로그인 홈으로 이동
         Member loginMember = (Member) session.getAttribute("loginMember");
+        //System.out.println("로그인 멤버 name : ");
+        //System.out.println(loginMember.getName());
+        
         if (loginMember != null) {
             model.addAttribute("loginMessage", loginMember.getName()+"님 로그인 상태입니다."); 
             model.addAttribute("posts",postservice.findPosts());

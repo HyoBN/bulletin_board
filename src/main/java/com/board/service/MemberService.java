@@ -20,33 +20,41 @@ public class MemberService{
         this.memberRepository = memberRepository;
     }
     
-    public Long join(Member member){
+    public String join(Member member){
+        try{
+        memberRepository.findById(member.getId())
+            .ifPresent(m -> {
+                throw new IllegalStateException("ID 중복");
+            });
+        } catch (Exception IllegalStateException){
+            return "idOverlap"; 
+        }
         try{
         memberRepository.findByName(member.getName())
             .ifPresent(m -> {
-                throw new IllegalStateException("이미 존재하는 회원입니다.");
+                throw new IllegalStateException("회원명 중복");
             });
         } catch (Exception IllegalStateException){
-            return 0L; 
+            return "nameOverlap"; 
         }
 
         memberRepository.save(member);
-        return member.getId();
+        return "loginSuccess";
     }
     
     public List<Member> findMembers() {
          return memberRepository.findAll();
     }
     
-    public Optional<Member> findOne(Long memberId){
+    public Optional<Member> findOne(String memberId){
         return memberRepository.findById(memberId);
     }
     
     public Long isMember(Member member){    
         try{
-            memberRepository.findByNameAndPassword(member.getName(), member.getPassword())
+            memberRepository.findByIdAndPassword(member.getId(), member.getPassword())
                 .ifPresent(m -> {
-                    throw new IllegalStateException("등록된 회원이 맞습니다.");
+                    throw new IllegalStateException("Member Checked!");
                 });
             } catch (Exception IllegalStateException){
                 return 0L; 
