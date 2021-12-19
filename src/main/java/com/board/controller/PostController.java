@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.board.entity.Post;
 import com.board.service.PostService;
+import com.board.entity.Member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,8 @@ public class PostController {
             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
             return "sessionFail";
         }
+        Member member = (Member) session.getAttribute("loginMember");
+        model.addAttribute("loginMemberName",member.getName());
         return "posts/createPostForm";
     }
     
