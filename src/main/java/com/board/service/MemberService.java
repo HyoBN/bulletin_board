@@ -50,6 +50,12 @@ public class MemberService{
         return memberRepository.findById(memberId);
     }
     
+    public String findName(String memberId){
+        Optional<Member> member = memberRepository.findById(memberId);
+        //String name=member.
+        return member.get().getName();
+    }
+    
     public Long isMember(Member member){    
         try{
             memberRepository.findByIdAndPassword(member.getId(), member.getPassword())

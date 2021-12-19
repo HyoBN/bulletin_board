@@ -58,21 +58,16 @@ public class MemberController {
     @PostMapping("/signIn")
     public String signIn(MemberForm form, Model msg, HttpServletRequest request){
         Member member = new Member();
-        
-        member.setPassword(form.getPassword());
-        member.setName(form.getName());
         member.setId(form.getId());
-        //위 두 문장 순서만 바꾸니까 제대로 실행됨. Name을 먼저하면 form.name에는 null이 저장됨(password는 정상적으로 저장됨.)
-
+        member.setPassword(form.getPassword());
+        
         if(memberService.isMember(member) == 0L){
+            member.setName(memberService.findName(form.getId()));
             HttpSession session = request.getSession();
-            session.setAttribute("loginMember",member);
             
             msg.addAttribute("loginMessage", member.getId()+"님 환영합니다!!"); 
             return "redirect:/";
         }
-        
-        //loginFail 페이지가 아닌 팝업창, 메시지 띄우는 것으로 바꾸기.
         return "loginFail";
     }
     
