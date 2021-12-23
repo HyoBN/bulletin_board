@@ -4,9 +4,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="container">
-    <p th:text="${sessionMessage}"></p>
+    
     <p>
-        반갑습니다....
+        게시글 상세 페이지
     </p>
     <thead>
     <tr>
@@ -33,5 +33,6 @@
     <form th:action="${'/posts/delete/'+post.id}" method="post">
         <button type="submit">삭제</button> 
     </form>
+    <p th:text="${sessionMessage}"></p>
 </body>
 </html>

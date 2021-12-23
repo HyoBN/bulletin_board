@@ -64,7 +64,7 @@ public class MemberController {
         if(memberService.isMember(member) == 0L){
             member.setName(memberService.findName(form.getId()));
             HttpSession session = request.getSession();
-            
+            session.setAttribute("loginMember",member);
             msg.addAttribute("loginMessage", member.getId()+"님 환영합니다!!"); 
             return "redirect:/";
         }

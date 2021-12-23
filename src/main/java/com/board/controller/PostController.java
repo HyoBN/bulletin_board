@@ -68,7 +68,7 @@ public class PostController {
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
-            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
+            
             return "sessionFail";
         }
         Post post = postservice.findOne(id);
@@ -79,13 +79,25 @@ public class PostController {
     @GetMapping("/posts/modify/{id}")
     public String toModifyPage(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
+        
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
-            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
             return "sessionFail";
         }
-        model.addAttribute("post",postservice.findOne(id));
-        return "posts/postModify";
+        
+        Post post = postservice.findOne(id);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+                
+        if(post.getWriter().equals(loginMember.getName())==false){
+            model.addAttribute("post",post);
+            model.addAttribute("sessionMessage","작성자만 수정가능합니다.");
+            return "posts/postDetail";
+        }
+        else{
+            model.addAttribute("post",post);
+            return "posts/postModify";
+        }
+        
     }
     
     @PostMapping("/posts/modify/{id}")
@@ -101,19 +113,28 @@ public class PostController {
             post.setWriter(form.getWriter());
             post.setContents(form.getContents());
             postservice.upload(post);
-            
         }
         return "redirect:/";
     }
     
     @PostMapping("/posts/delete/{id}")
-    public String deletePost(@PathVariable("id") Long id,HttpServletRequest request){
+    public String deletePost(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session==null){
             // 세션 만료되었다는 팝업 띄우기.
             return "sessionFail";
         }
-        postservice.delete(id);
-        return "redirect:/";
+        Post post = postservice.findOne(id);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        if(post.getWriter().equals(loginMember.getName())==false){
+            model.addAttribute("post",post);
+            model.addAttribute("sessionMessage","작성자만 삭제가능합니다.");
+            return "posts/postDetail";
+            
+        }
+        else{
+            postservice.delete(id);
+            return "redirect:/";
+        }
     }
 }
