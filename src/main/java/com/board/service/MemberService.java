@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
 
-
 @Transactional
 @Service
 public class MemberService{
@@ -19,7 +18,6 @@ public class MemberService{
     public MemberService(MemberRepository memberRepository){
         this.memberRepository = memberRepository;
     }
-    
     public String join(Member member){
         try{
         memberRepository.findById(member.getId())
@@ -37,7 +35,6 @@ public class MemberService{
         } catch (Exception IllegalStateException){
             return "nameOverlap"; 
         }
-
         memberRepository.save(member);
         return "loginSuccess";
     }
@@ -52,7 +49,6 @@ public class MemberService{
     
     public String findName(String memberId){
         Optional<Member> member = memberRepository.findById(memberId);
-        //String name=member.
         return member.get().getName();
     }
     

@@ -10,11 +10,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.springframework.validation.*;
 import com.board.entity.Member;
-import com.board.repository.MemberRepository;
 import com.board.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +25,6 @@ public class MemberController {
     public MemberController(MemberService memberService){
         this.memberService = memberService;
     }
-
     
     @GetMapping("/members/new")
     public String createForm() {
@@ -65,7 +60,6 @@ public class MemberController {
             member.setName(memberService.findName(form.getId()));
             HttpSession session = request.getSession();
             session.setAttribute("loginMember",member);
-            msg.addAttribute("loginMessage", member.getId()+"님 환영합니다!!"); 
             return "redirect:/";
         }
         return "loginFail";
@@ -73,12 +67,10 @@ public class MemberController {
     
     @PostMapping("/logout")
     public String Logout(HttpServletRequest request){
-        
         HttpSession session = request.getSession(false);
         if(session!=null){
             session.invalidate();
         }
-        
         return "redirect:/";
     }
     

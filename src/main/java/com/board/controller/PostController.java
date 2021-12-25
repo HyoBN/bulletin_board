@@ -35,7 +35,6 @@ public class PostController {
     public String createForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
             return "sessionFail";
         }
@@ -48,7 +47,6 @@ public class PostController {
         public String create(PostForm form, Model model, HttpServletRequest request){        
         HttpSession session = request.getSession(false);
         if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
              model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
         }
             
@@ -66,9 +64,7 @@ public class PostController {
     @GetMapping("/posts/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
-            
+        if(session==null){          
             return "sessionFail";
         }
         Post post = postservice.findOne(id);
@@ -81,7 +77,6 @@ public class PostController {
         HttpSession session = request.getSession(false);
         
         if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
             return "sessionFail";
         }
         
@@ -97,14 +92,12 @@ public class PostController {
             model.addAttribute("post",post);
             return "posts/postModify";
         }
-        
     }
     
     @PostMapping("/posts/modify/{id}")
     public String updatePost(@PathVariable("id") Long id, PostForm form, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
             return "sessionFail";
         }
         else if(session!=null){
@@ -121,7 +114,6 @@ public class PostController {
     public String deletePost(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session==null){
-            // 세션 만료되었다는 팝업 띄우기.
             return "sessionFail";
         }
         Post post = postservice.findOne(id);
@@ -130,7 +122,6 @@ public class PostController {
             model.addAttribute("post",post);
             model.addAttribute("sessionMessage","작성자만 삭제가능합니다.");
             return "posts/postDetail";
-            
         }
         else{
             postservice.delete(id);

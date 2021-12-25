@@ -1,9 +1,6 @@
-
 package com.board.controller;
 
-import javax.validation.constraints.*;
-
-import org.springframework.validation.*;
+import javax.validation.constraints.NotNull;
 
 public class PostForm{
     
