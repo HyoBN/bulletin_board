@@ -21,8 +21,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post : ${posts}">
-                <td th:text="${post.id}"></td>
+            <tr th:each="post,i : ${posts}">
+                <td th:text="${i.size - i.count+1}"></td>
                 <td>
                     <a th:href="${'/posts/detail/' + post.id}" th:text="${post.title}"/>
                 </td>
