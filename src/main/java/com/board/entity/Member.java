@@ -11,7 +11,6 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long num;
-    
     private String id;
     private String name;
     private String password;
@@ -19,17 +18,17 @@ public class Member {
     public Long getNum() {
         return num;
     }
-    
     public void setNum(Long num) {
         this.num = num;
     }
+    
     public String getId() {
         return id;
     }
-    
     public void setId(String id) {
         this.id = id;
     }
+    
     public String getName() {
         return name;
     }
@@ -40,9 +39,7 @@ public class Member {
     public String getPassword(){
         return password;
     }
-    
     public void setPassword(String password){
         this.password=password;
     }
-    
 }

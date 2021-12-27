@@ -5,15 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.ui.Model;
-
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.board.entity.Post;
 import com.board.service.PostService;
@@ -56,7 +50,6 @@ public class PostController {
             post.setWriter(form.getWriter());
             post.setContents(form.getContents());
             postservice.upload(post);
-            
         }
         return "redirect:/";
     }
@@ -75,7 +68,6 @@ public class PostController {
     @GetMapping("/posts/modify/{id}")
     public String toModifyPage(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        
         if(session==null){
             return "sessionFail";
         }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
-import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 

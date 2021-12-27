@@ -33,6 +33,6 @@
     <form th:action="${'/posts/delete/'+post.id}" method="post">
         <button type="submit">삭제</button> 
     </form>
-    <p th:text="${sessionMessage}"></p>
+    <p th:text="${sessionMessage}" style="color:red"></p>
 </body>
 </html>

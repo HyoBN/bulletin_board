@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.ui.Model;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.board.entity.Member;
 import com.board.service.MemberService;
 

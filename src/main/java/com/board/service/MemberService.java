@@ -18,6 +18,7 @@ public class MemberService{
     public MemberService(MemberRepository memberRepository){
         this.memberRepository = memberRepository;
     }
+    
     public String join(Member member){
         try{
         memberRepository.findById(member.getId())
@@ -27,6 +28,7 @@ public class MemberService{
         } catch (Exception IllegalStateException){
             return "idOverlap"; 
         }
+        
         try{
         memberRepository.findByName(member.getName())
             .ifPresent(m -> {
@@ -35,6 +37,7 @@ public class MemberService{
         } catch (Exception IllegalStateException){
             return "nameOverlap"; 
         }
+        
         memberRepository.save(member);
         return "loginSuccess";
     }
