@@ -12,7 +12,6 @@ import com.board.repository.PostRepository;
 @Service
 public class PostService{
     private final PostRepository postRepository;
-    
     @Autowired
     public PostService(PostRepository postRepository){
         this.postRepository = postRepository;
@@ -28,12 +27,10 @@ public class PostService{
     }
     
     public List<Post> findPosts(){
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByIdDesc();
     }
     
     public Post findOne(Long postId){
-        Post post = new Post();
-        post=postRepository.findById(postId);
         return postRepository.findById(postId);
     }
 }
