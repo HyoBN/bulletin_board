@@ -29,7 +29,7 @@ public class MemberController {
     }
     
     @PostMapping("/members/new")
-    public String create(MemberForm form, Model msg){
+    public String create(MemberForm form, Model msg, Model model){
         Member member = new Member();
         member.setId(form.getId());
         member.setName(form.getName());
@@ -37,13 +37,16 @@ public class MemberController {
        
         String joinMessage=memberService.join(member);
         if(joinMessage=="idOverlap"){ 
-            msg.addAttribute("loginMessage", "이미 존재하는 ID입니다"); 
+            msg.addAttribute("loginMessage", "이미 존재하는 ID입니다");
+            model.addAttribute("memberFormData",member);
             return "members/createMemberForm";
         }
         else if(joinMessage=="nameOverlap"){ 
-            msg.addAttribute("loginMessage", "이미 존재하는 이름입니다"); 
+            msg.addAttribute("loginMessage", "이미 존재하는 이름입니다");
+            model.addAttribute("memberFormData",member);
             return "members/createMemberForm";
         }
+        
         return "redirect:/";
     }
     
