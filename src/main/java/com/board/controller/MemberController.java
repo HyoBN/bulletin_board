@@ -24,7 +24,7 @@ public class MemberController {
     @PostMapping("/members/new")
     public String create(MemberForm form, Model msg, Model model){
         Member member = new Member();
-        member.setId(form.getId());
+        member.setUserId(form.getUserId());
         member.setName(form.getName());
         member.setPassword(form.getPassword());
        
@@ -46,11 +46,11 @@ public class MemberController {
     @PostMapping("/signIn")
     public String signIn(MemberForm form, Model msg, HttpServletRequest request){
         Member member = new Member();
-        member.setId(form.getId());
+        member.setUserId(form.getUserId());
         member.setPassword(form.getPassword());
         
         if(memberService.isMember(member) == 0L){
-            member.setName(memberService.findName(form.getId()));
+            member.setName(memberService.findName(form.getUserId()));
             HttpSession session = request.getSession();
             session.setAttribute("loginMember",member);
             return "redirect:/";

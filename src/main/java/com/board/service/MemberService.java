@@ -3,7 +3,6 @@ package com.board.service;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,7 @@ public class MemberService{
     
     public String join(Member member){
         try{
-        memberRepository.findById(member.getId())
+        memberRepository.findByUserId(member.getUserId())
             .ifPresent(m -> {
                 throw new IllegalStateException("ID 중복");
             });
@@ -44,13 +43,13 @@ public class MemberService{
     }
 
     public String findName(String memberId){
-        Optional<Member> member = memberRepository.findById(memberId);
+        Optional<Member> member = memberRepository.findByUserId(memberId);
         return member.get().getName();
     }
     
     public Long isMember(Member member){    
         try{
-            memberRepository.findByIdAndPassword(member.getId(), member.getPassword())
+            memberRepository.findByIdAndPassword(member.getUserId(), member.getPassword())
                 .ifPresent(m -> {
                     throw new IllegalStateException("Member Checked!");
                 });

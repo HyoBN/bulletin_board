@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter @Setter
 public class MemberForm{
-    private String id;
+    private String userId;
     @NotNull
     private String name;
     @NotNull
