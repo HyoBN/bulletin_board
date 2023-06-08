@@ -1,0 +1,28 @@
+<!-- 게시글 상세 페이지 -->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <p>
+        게시글 수정 페이지
+    </p>
+    <form th:action="${'/posts/modify/'+post.id}" method="post">
+        <label for="name">제목</label>
+        <input type="text" id="title" name="title" th:value="${post.title}"></input>
+        <label for="name">작성자</label>
+        <input type="text" id="writer" name="writer" th:value="${post.writer}" readonly="readonly"></input>
+        <label for="name">날짜</label>
+        <input type="text" id="date" name="date" th:value="${post.date}" readonly="readonly"></input>
+        <label for="">내용</label>
+        <textarea id="contents" name="contents" th:text="${post.contents}"></textarea>  
+    
+        <div class="form-group">
+            <button type="submit">완료</button>   
+        </div>
+    </form>
+    
+
+</div> <!-- /container -->
+</body>
+</html>
