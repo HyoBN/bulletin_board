@@ -2,6 +2,7 @@ package com.board.controller;
 
 import com.board.entity.Member;
 import com.board.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController{
-    
-    private PostService postservice;
-    
-    @Autowired
-    public HomeController(PostService postservice){
-        this.postservice=postservice;
-    }
+    private final PostService postservice;
+
     //비회원의 home과 회원의 home을 분리하여 연결시킴.
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model){

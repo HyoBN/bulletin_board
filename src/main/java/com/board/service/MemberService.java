@@ -2,6 +2,7 @@ package com.board.service;
 
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +12,9 @@ import java.util.Optional;
 
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class MemberService{
     private final MemberRepository memberRepository;
-    
-    @Autowired
-    public MemberService(MemberRepository memberRepository){
-        this.memberRepository = memberRepository;
-    }
     
     public String join(Member member){
         try{
@@ -45,11 +42,7 @@ public class MemberService{
     public List<Member> findMembers() {
          return memberRepository.findAll();
     }
-    
-    public Optional<Member> findOne(String memberId){
-        return memberRepository.findById(memberId);
-    }
-    
+
     public String findName(String memberId){
         Optional<Member> member = memberRepository.findById(memberId);
         return member.get().getName();

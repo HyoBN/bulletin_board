@@ -1,27 +1,22 @@
-
 package com.board.controller;
 
 import com.board.entity.Member;
 import com.board.entity.Post;
 import com.board.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
-    private PostService postservice;
-    
-    @Autowired
-    public PostController(PostService postservice){
-        this.postservice=postservice;
-    }
+    private final PostService postservice;
     
     @GetMapping("/posts/new")
     public String createForm(Model model, HttpServletRequest request) {
