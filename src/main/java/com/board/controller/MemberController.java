@@ -23,10 +23,7 @@ public class MemberController {
     
     @PostMapping("/members/new")
     public String create(MemberForm form, Model msg, Model model){
-        Member member = new Member();
-        member.setUserId(form.getUserId());
-        member.setName(form.getName());
-        member.setPassword(form.getPassword());
+        Member member = new Member(form);
        
         String joinMessage=memberService.join(member);
         if(joinMessage=="idOverlap"){ 
@@ -39,15 +36,12 @@ public class MemberController {
             model.addAttribute("memberFormData",member);
             return "members/createMemberForm";
         }
-        
         return "redirect:/";
     }
     
     @PostMapping("/signIn")
-    public String signIn(MemberForm form, Model msg, HttpServletRequest request){
-        Member member = new Member();
-        member.setUserId(form.getUserId());
-        member.setPassword(form.getPassword());
+    public String signIn(MemberForm form, HttpServletRequest request){
+        Member member = new Member(form);
         
         if(memberService.isMember(member) == 0L){
             member.setName(memberService.findName(form.getUserId()));

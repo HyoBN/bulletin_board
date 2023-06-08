@@ -4,7 +4,6 @@ import com.board.entity.Member;
 import com.board.entity.Post;
 import com.board.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,14 +36,8 @@ public class PostController {
         if(session==null){
              model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
         }
-            
-        else if(session!=null){
-            Post post = new Post();
-            post.setTitle(form.getTitle());
-            post.setWriter(form.getWriter());
-            post.setContents(form.getContents());
-            postservice.upload(post);
-        }
+        Post post = new Post(form);
+        postservice.upload(post);
         return "redirect:/";
     }
     
@@ -68,15 +61,13 @@ public class PostController {
         
         Post post = postservice.findOne(id);
         Member loginMember = (Member) session.getAttribute("loginMember");
-                
-        if(post.getWriter().equals(loginMember.getName())==false){
-            model.addAttribute("post",post);
+        model.addAttribute("post",post);
+
+        if (postservice.writerCheck(post, loginMember)) {
+            return "posts/postModify";
+        }else{
             model.addAttribute("sessionMessage","작성자만 수정가능합니다.");
             return "posts/postDetail";
-        }
-        else{
-            model.addAttribute("post",post);
-            return "posts/postModify";
         }
     }
     
@@ -86,13 +77,7 @@ public class PostController {
         if(session==null){
             return "sessionFail";
         }
-        else if(session!=null){
-            Post post = postservice.findOne(id);
-            post.setTitle(form.getTitle());
-            post.setWriter(form.getWriter());
-            post.setContents(form.getContents());
-            postservice.upload(post);
-        }
+        postservice.modifyPost(id, form);
         return "redirect:/";
     }
     
@@ -102,16 +87,16 @@ public class PostController {
         if(session==null){
             return "sessionFail";
         }
+
         Post post = postservice.findOne(id);
         Member loginMember = (Member) session.getAttribute("loginMember");
-        if(post.getWriter().equals(loginMember.getName())==false){
+        if (postservice.writerCheck(post, loginMember)) {
+            postservice.delete(id);
+            return "redirect:/";
+        }else{
             model.addAttribute("post",post);
             model.addAttribute("sessionMessage","작성자만 삭제가능합니다.");
             return "posts/postDetail";
-        }
-        else{
-            postservice.delete(id);
-            return "redirect:/";
         }
     }
 }
