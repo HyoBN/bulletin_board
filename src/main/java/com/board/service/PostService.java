@@ -1,12 +1,12 @@
 package com.board.service;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
+import com.board.repository.PostRepository;
+import com.board.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.board.entity.Post;
-import com.board.repository.PostRepository;
+import java.util.List;
 
 @Transactional
 @Service
