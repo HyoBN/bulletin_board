@@ -1,5 +1,6 @@
 package com.board.service;
 
+import com.board.controller.MemberForm;
 import com.board.entity.JoinResult;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
@@ -31,17 +32,13 @@ public class MemberService{
          return memberRepository.findAll();
     }
 
-    public String findName(String memberId){
-        Optional<Member> member = memberRepository.findByUserId(memberId);
-        return member.get().getName();
-    }
-    
-    public boolean isMember(Member member){
-        try {
-            memberRepository.findByUserIdAndPassword(member.getUserId(), member.getPassword()).get();
-        }catch (Exception e){
-                return false;
-            }        
-        return true;
+    public Member checkMember(MemberForm form) {
+        Optional<Member> optionalMember = memberRepository.findByUserIdAndPassword(form.getUserId(), form.getPassword());
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return member;
+        }else{
+            return null;
+        }
     }
 }

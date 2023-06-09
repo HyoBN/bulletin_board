@@ -34,31 +34,18 @@ public class MemberController {
             model.addAttribute("memberFormData", member);
             return "members/createMemberForm";
         }
-
-//
-//        if(joinMessage=="idOverlap"){
-//            msg.addAttribute("loginMessage", "이미 존재하는 ID입니다");
-//            model.addAttribute("memberFormData",member);
-//            return "members/createMemberForm";
-//        }
-//        else if(joinMessage=="nameOverlap"){
-//            msg.addAttribute("loginMessage", "이미 존재하는 이름입니다");
-//            model.addAttribute("memberFormData",member);
-//            return "members/createMemberForm";
-//        }
-//        return "redirect:/";
     }
     
     @PostMapping("/signIn")
     public String signIn(MemberForm form, HttpServletRequest request){
-        Member member = new Member(form);
-        if(memberService.isMember(member)){
-            member.setName(memberService.findName(form.getUserId()));
+        Member member = memberService.checkMember(form);
+        if (member == null) {
+            return "loginFail";
+        }else{
             HttpSession session = request.getSession();
             session.setAttribute("loginMember",member);
             return "redirect:/";
         }
-        return "loginFail";
     }
     
     @PostMapping("/logout")
