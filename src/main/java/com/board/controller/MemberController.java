@@ -42,8 +42,7 @@ public class MemberController {
     @PostMapping("/signIn")
     public String signIn(MemberForm form, HttpServletRequest request){
         Member member = new Member(form);
-        
-        if(memberService.isMember(member) == 0L){
+        if(memberService.isMember(member)){
             member.setName(memberService.findName(form.getUserId()));
             HttpSession session = request.getSession();
             session.setAttribute("loginMember",member);

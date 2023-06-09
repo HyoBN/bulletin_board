@@ -21,21 +21,13 @@ public class PostController {
     @GetMapping("/posts/new")
     public String createForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if(session==null){
-            model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
-            return "sessionFail";
-        }
         Member member = (Member) session.getAttribute("loginMember");
         model.addAttribute("loginMemberName",member.getName());
         return "posts/createPostForm";
     }
     
     @PostMapping("/posts/new")
-        public String create(PostForm form, Model model, HttpServletRequest request){        
-        HttpSession session = request.getSession(false);
-        if(session==null){
-             model.addAttribute("sessionMessage","로그인 후 접근 가능합니다.");
-        }
+        public String create(PostForm form, Model model, HttpServletRequest request){
         Post post = new Post(form);
         postservice.upload(post);
         return "redirect:/";
@@ -43,22 +35,14 @@ public class PostController {
     
     @GetMapping("/posts/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session==null){          
-            return "sessionFail";
-        }
         Post post = postservice.findOne(id);
         model.addAttribute("post",post);
         return "posts/postDetail";
     }
-    
+
     @GetMapping("/posts/modify/{id}")
     public String toModifyPage(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        if(session==null){
-            return "sessionFail";
-        }
-        
         Post post = postservice.findOne(id);
         Member loginMember = (Member) session.getAttribute("loginMember");
         model.addAttribute("post",post);
@@ -73,10 +57,6 @@ public class PostController {
     
     @PostMapping("/posts/modify/{id}")
     public String updatePost(@PathVariable("id") Long id, PostForm form, HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session==null){
-            return "sessionFail";
-        }
         postservice.modifyPost(id, form);
         return "redirect:/";
     }
@@ -84,10 +64,6 @@ public class PostController {
     @DeleteMapping("/posts/{id}")
     public String deletePost(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        if(session==null){
-            return "sessionFail";
-        }
-
         Post post = postservice.findOne(id);
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (postservice.writerCheck(post, loginMember)) {

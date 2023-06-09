@@ -47,15 +47,12 @@ public class MemberService{
         return member.get().getName();
     }
     
-    public Long isMember(Member member){    
-        try{
-            memberRepository.findByIdAndPassword(member.getUserId(), member.getPassword())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("Member Checked!");
-                });
-            } catch (Exception IllegalStateException){
-                return 0L; 
+    public boolean isMember(Member member){
+        try {
+            memberRepository.findByUserIdAndPassword(member.getUserId(), member.getPassword()).get();
+        }catch (Exception e){
+                return false;
             }        
-        return 1L;
+        return true;
     }
 }
