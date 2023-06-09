@@ -1,5 +1,6 @@
 package com.board.service;
 
+import com.board.entity.JoinResult;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,27 +16,15 @@ import java.util.Optional;
 public class MemberService{
     private final MemberRepository memberRepository;
     
-    public String join(Member member){
-        try{
-        memberRepository.findByUserId(member.getUserId())
-            .ifPresent(m -> {
-                throw new IllegalStateException("ID 중복");
-            });
-        } catch (Exception IllegalStateException){
-            return "idOverlap"; 
+    public JoinResult join(Member member){
+
+        if (memberRepository.existsByUserId(member.getUserId())) {
+            return JoinResult.ID_OVERLAP;
+        } else if (memberRepository.existsByName(member.getName())) {
+            return JoinResult.NAME_OVERLAP;
+        }else{
+            return JoinResult.JOIN_SUCCESS;
         }
-        
-        try{
-        memberRepository.findByName(member.getName())
-            .ifPresent(m -> {
-                throw new IllegalStateException("회원명 중복");
-            });
-        } catch (Exception IllegalStateException){
-            return "nameOverlap"; 
-        }
-        
-        memberRepository.save(member);
-        return "loginSuccess";
     }
     
     public List<Member> findMembers() {

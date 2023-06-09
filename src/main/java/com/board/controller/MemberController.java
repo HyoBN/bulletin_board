@@ -1,5 +1,6 @@
 package com.board.controller;
 
+import com.board.entity.JoinResult;
 import com.board.entity.Member;
 import com.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +23,30 @@ public class MemberController {
     }
     
     @PostMapping("/members/new")
-    public String create(MemberForm form, Model msg, Model model){
+    public String create(MemberForm form, Model model){
         Member member = new Member(form);
-       
-        String joinMessage=memberService.join(member);
-        if(joinMessage=="idOverlap"){ 
-            msg.addAttribute("loginMessage", "이미 존재하는 ID입니다");
-            model.addAttribute("memberFormData",member);
+        JoinResult joinResult = memberService.join(member);
+
+        if (joinResult.equals(JoinResult.JOIN_SUCCESS)) {
+            return "redirect:/";
+        }else{
+            model.addAttribute("joinMessage", joinResult.getMessage());
+            model.addAttribute("memberFormData", member);
             return "members/createMemberForm";
         }
-        else if(joinMessage=="nameOverlap"){ 
-            msg.addAttribute("loginMessage", "이미 존재하는 이름입니다");
-            model.addAttribute("memberFormData",member);
-            return "members/createMemberForm";
-        }
-        return "redirect:/";
+
+//
+//        if(joinMessage=="idOverlap"){
+//            msg.addAttribute("loginMessage", "이미 존재하는 ID입니다");
+//            model.addAttribute("memberFormData",member);
+//            return "members/createMemberForm";
+//        }
+//        else if(joinMessage=="nameOverlap"){
+//            msg.addAttribute("loginMessage", "이미 존재하는 이름입니다");
+//            model.addAttribute("memberFormData",member);
+//            return "members/createMemberForm";
+//        }
+//        return "redirect:/";
     }
     
     @PostMapping("/signIn")
