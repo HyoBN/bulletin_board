@@ -1,6 +1,7 @@
 package com.board.service;
 
-import com.board.controller.PostForm;
+import com.board.dto.MemberResponseDto;
+import com.board.dto.PostRequestDto;
 import com.board.entity.Member;
 import com.board.repository.PostRepository;
 import com.board.entity.Post;
@@ -20,7 +21,7 @@ public class PostService{
         postRepository.save(post);
     }
 
-    public void modifyPost(Long id, PostForm form) {
+    public void modifyPost(Long id, PostRequestDto form) {
         Post post = findOne(id);
         post.setTitle(form.getTitle());
         post.setWriter(form.getWriter());
@@ -28,8 +29,8 @@ public class PostService{
         upload(post);
     }
 
-    public boolean writerCheck(Post post, Member member) {
-        if (post.getWriter().equals(member.getName())) {
+    public boolean writerCheck(Post post, MemberResponseDto memberResponseDto) {
+        if (post.getWriter().equals(memberResponseDto.getName())) {
             return true;
         } else{
             return false;

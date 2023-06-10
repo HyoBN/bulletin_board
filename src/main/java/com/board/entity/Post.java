@@ -1,6 +1,6 @@
 package com.board.entity;
 
-import com.board.controller.PostForm;
+import com.board.dto.PostRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +24,9 @@ public class Post {
     private String date;
 
     @Builder
-    public Post(PostForm form) {
+    public Post(PostRequestDto form) {
         this.title = form.getTitle();
         this.writer = form.getWriter();
         this.contents = form.getContents();
     }
-
-
 }

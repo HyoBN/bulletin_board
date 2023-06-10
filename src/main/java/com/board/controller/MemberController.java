@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import com.board.dto.MemberRequestDto;
+import com.board.dto.MemberResponseDto;
 import com.board.entity.JoinResult;
 import com.board.entity.Member;
 import com.board.service.MemberService;
@@ -23,27 +25,28 @@ public class MemberController {
     }
     
     @PostMapping("/members/new")
-    public String create(MemberForm form, Model model){
-        Member member = new Member(form);
-        JoinResult joinResult = memberService.join(member);
+    public String create(MemberRequestDto form, Model model){
+        Member requestMember = new Member(form);
+        JoinResult joinResult = memberService.join(requestMember);
 
         if (joinResult.equals(JoinResult.JOIN_SUCCESS)) {
             return "redirect:/";
         }else{
             model.addAttribute("joinMessage", joinResult.getMessage());
-            model.addAttribute("memberFormData", member);
+            model.addAttribute("memberFormData", requestMember);
             return "members/createMemberForm";
         }
     }
     
     @PostMapping("/signIn")
-    public String signIn(MemberForm form, HttpServletRequest request){
+    public String signIn(MemberRequestDto form, HttpServletRequest request){
         Member member = memberService.checkMember(form);
         if (member == null) {
             return "loginFail";
         }else{
             HttpSession session = request.getSession();
-            session.setAttribute("loginMember",member);
+            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
+            session.setAttribute("loginMember",memberResponseDto);
             return "redirect:/";
         }
     }

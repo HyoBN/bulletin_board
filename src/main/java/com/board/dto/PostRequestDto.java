@@ -1,4 +1,4 @@
-package com.board.controller;
+package com.board.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 
 @Getter @Setter
-public class PostForm{
+public class PostRequestDto {
     @NotNull
     private String title;
     private String writer;

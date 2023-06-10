@@ -1,6 +1,6 @@
 package com.board.entity;
 
-import com.board.controller.MemberForm;
+import com.board.dto.MemberRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class Member {
     private String password;
 
     @Builder
-    public Member(MemberForm form) {
+    public Member(MemberRequestDto form) {
         this.userId = form.getUserId();
         this.name = form.getName();
         this.password = form.getPassword();

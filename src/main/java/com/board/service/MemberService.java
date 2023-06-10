@@ -1,6 +1,7 @@
 package com.board.service;
 
-import com.board.controller.MemberForm;
+import com.board.dto.MemberRequestDto;
+import com.board.dto.MemberResponseDto;
 import com.board.entity.JoinResult;
 import com.board.entity.Member;
 import com.board.repository.MemberRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -28,11 +30,15 @@ public class MemberService{
         }
     }
     
-    public List<Member> findMembers() {
-         return memberRepository.findAll();
+    public List<MemberResponseDto> findMembers() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberResponseDto> memberResponseDtos = members.stream()
+                .map(m -> new MemberResponseDto(m))
+                .collect(Collectors.toList());
+        return memberResponseDtos;
     }
 
-    public Member checkMember(MemberForm form) {
+    public Member checkMember(MemberRequestDto form) {
         Optional<Member> optionalMember = memberRepository.findByUserIdAndPassword(form.getUserId(), form.getPassword());
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
