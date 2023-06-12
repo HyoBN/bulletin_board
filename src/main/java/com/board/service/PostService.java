@@ -30,11 +30,7 @@ public class PostService{
     }
 
     public boolean writerCheck(Post post, MemberResponseDto memberResponseDto) {
-        if (post.getWriter().equals(memberResponseDto.getName())) {
-            return true;
-        } else{
-            return false;
-        }
+        return post.getWriter().equals(memberResponseDto.getName());
     }
 
     
@@ -46,7 +42,8 @@ public class PostService{
         return postRepository.findAllByOrderByIdDesc();
     }
     
-    public Post findOne(Long postId){
-        return postRepository.findById(postId).get();
+    public Post findOne(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
     }
 }

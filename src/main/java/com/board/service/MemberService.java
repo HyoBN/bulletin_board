@@ -16,20 +16,20 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class MemberService{
+public class MemberService {
     private final MemberRepository memberRepository;
-    
-    public JoinResult join(Member member){
+
+    public JoinResult join(Member member) {
 
         if (memberRepository.existsByUserId(member.getUserId())) {
             return JoinResult.ID_OVERLAP;
         } else if (memberRepository.existsByName(member.getName())) {
             return JoinResult.NAME_OVERLAP;
-        }else{
+        } else {
             return JoinResult.JOIN_SUCCESS;
         }
     }
-    
+
     public List<MemberResponseDto> findMembers() {
         List<Member> members = memberRepository.findAll();
         List<MemberResponseDto> memberResponseDtos = members.stream()
@@ -39,12 +39,7 @@ public class MemberService{
     }
 
     public Member checkMember(MemberRequestDto form) {
-        Optional<Member> optionalMember = memberRepository.findByUserIdAndPassword(form.getUserId(), form.getPassword());
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            return member;
-        }else{
-            return null;
-        }
+        return memberRepository.findByUserIdAndPassword(form.getUserId(), form.getPassword())
+                .orElse(null);
     }
 }
